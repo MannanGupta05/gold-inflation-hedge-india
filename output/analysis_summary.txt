@@ -1,0 +1,24 @@
+======================================================================
+INDIA'S INFLATION VS. GOLD PRICES: STATISTICAL SUMMARY
+======================================================================
+
+Data Period: January 2015 to January 2025
+Number of Observations: 1488
+
+DESCRIPTIVE STATISTICS:
+  Inflation Rate: Mean = 0.0623%, Std = 2.3748%
+  Gold Returns:   Mean = 0.1240%, Std = 3.5736%
+
+KEY FINDINGS:
+1. Overall Correlation: 0.0465
+   - Gold and inflation have a WEAK relationship
+
+2. Regression (Gold = alpha + beta * Inflation):
+   - Intercept (alpha):    0.1197
+   - Beta (beta):         0.0700
+   - P-value:          0.0730 (NOT Statistically Significant)
+   - R-squared:        0.0022
+   - Interpretation: For every 1% rise in inflation, gold rises 0.07% on average
+
+3. Hedge Quality:
+   - WEAK HEDGE: Gold only captures ~7% of inflation

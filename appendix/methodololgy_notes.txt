@@ -1,0 +1,100 @@
+METHODOLOGY NOTES
+"IS GOLD A RELIABLE INFLATION HEDGE IN INDIA? (2015–2025)"
+
+1. DATA FREQUENCY AND ALIGNMENT
+
+   • CPI data:
+     - Source: MOSPI, CPI Combined (All India, base 2012=100)
+     - Frequency: Monthly
+     - Dates normalized to first day of month (YYYY-MM-01).
+   • Gold data:
+     - Source: Investing.com, MCX gold (INR per 10g)
+     - Frequency: Daily, aggregated to monthly by taking the last trading-day close each month.
+   • After date parsing, both series are converted to monthly periods and merged on the Date column using an inner join so that only months with both CPI and gold data are retained.[web:24][web:15]
+
+2. VARIABLE DEFINITIONS
+
+   • Price Level:
+     - CPI_Combined_t: CPI index at month t.
+     - Gold_Price_t: MCX gold price (INR/10g) at month t.
+   • Monthly Inflation Rate:
+     - Inflation_Rate_t = [(CPI_Combined_t − CPI_Combined_{t−1}) / CPI_Combined_{t−1}] × 100.
+   • Monthly Gold Returns:
+     - Gold_Returns_t = [(Gold_Price_t − Gold_Price_{t−1}) / Gold_Price_{t−1}] × 100.
+   • Rolling Correlation (window w):
+     - For each month t ≥ w:
+       corr_t = Corr(Inflation_Rate_{t−w+1:t}, Gold_Returns_{t−w+1:t}).
+   • Rolling Beta (hedge ratio, window w):
+     - For each month t ≥ w, estimate OLS regression:
+       Gold_Returns_s = α_t + β_t * Inflation_Rate_s + ε_s
+       for s ∈ [t−w+1, …, t].
+     - Store β_t as Rolling_Beta_t.
+
+3. ECONOMETRIC SPECIFICATION
+
+   • Baseline OLS model:
+       Gold_Returns_t = α + β * Inflation_Rate_t + ε_t
+   • Estimation:
+       - Ordinary Least Squares using statsmodels.
+       - Standard errors assumed homoskedastic in baseline.
+   • Interpretation:
+       - β ≈ 1, significant: strong hedge (gold fully offsets inflation).
+       - 0 < β < 1: partial hedge.
+       - β ≈ 0: no hedge.
+       - β < 0: perverse relationship (gold falls when inflation rises).
+   • Diagnostics reported:
+       - R-squared, Adjusted R-squared.
+       - F-statistic and p-value.
+       - Durbin–Watson statistic for residual autocorrelation.
+       - Coefficient confidence intervals at 95%.[web:67][web:70]
+
+4. ROLLING-WINDOW CHOICES
+
+   • Windows used:
+       - 12 months: captures short-run dynamics; more volatile.
+       - 24 months: smoother, medium-term perspective.
+   • Trade-offs:
+       - Shorter windows react faster but are noisier.
+       - Longer windows smooth noise but may miss brief structural breaks.
+   • Purpose:
+       - To examine time-variation in the gold–inflation linkage and identify periods when hedging appears to work or fail.
+
+5. OUTLIERS AND EXTREME EVENTS
+
+   • Extreme gold-return observations (e.g., COVID-19 in March 2020, post-2024 geopolitical spikes) were retained, not winsorized.
+   • Rationale:
+       - These reflect genuine safe-haven episodes and policy shocks, central to the research question.
+   • CPI also shows extreme monthly changes during lockdown and reopening; these are kept for realism.[web:51][web:55]
+
+6. STRUCTURAL EVENTS ANNOTATED IN PLOTS
+
+   • July 2024 gold import duty cut:
+       - Marked as a vertical line in time-series and rolling-statistic plots.
+       - Used as an interpretive anchor to discuss policy-induced breaks in the series.[web:5][web:75]
+   • COVID shock (2020) and subsequent inflation surge (2021–22) are discussed qualitatively but not formally modeled as breakpoints.
+
+7. SOFTWARE AND REPRODUCIBILITY
+
+   • Language: Python 3.x
+   • Key libraries:
+       - pandas (data handling)
+       - numpy (numerics)
+       - matplotlib, seaborn (visualization)
+       - statsmodels (regression)
+       - scipy (supporting statistics)
+   • All steps from raw CSV import to final charts are scripted in `analysis.py`, allowing full replication given:
+       - `data/cpi_data.csv`
+       - `data/gold_prices.csv`.[web:67][web:70]
+
+8. LIMITATIONS OF THE APPROACH
+
+   • Short-run focus:
+       - Monthly frequency and a 10-year window capture medium-run dynamics, not multi-decade hedging.
+   • Contemporaneous only:
+       - Baseline model uses Inflation_Rate_t contemporaneously; lag/lead relationships are not modeled.
+   • Omitted variables:
+       - Exchange rates, global interest rates, and risk indicators are excluded from the main regression to keep the model focused and interpretable.
+   • Nonlinearity/regime changes:
+       - The model is linear; potential asymmetric or regime-dependent effects (e.g., high vs. low inflation regimes) are left for future research.
+
+These notes are intended to make the analysis fully transparent and reproducible for instructors, reviewers, and future researchers.

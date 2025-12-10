@@ -1,0 +1,67 @@
+DATA SOURCES FOR "IS GOLD A RELIABLE INFLATION HEDGE IN INDIA? (2015–2025)"
+
+1. CONSUMER PRICE INDEX (CPI) – INDIA
+
+   • Variable: All-India CPI (Combined), Base 2012 = 100
+   • Frequency: Monthly
+   • Coverage: January 2015 – January 2025
+
+   Primary Source:
+   • Ministry of Statistics and Programme Implementation (MOSPI)
+     - Portal: CPI Data Portal
+     - URL (entry point): https://cpi.mospi.gov.in
+
+   Procedure:
+   • Select All-India CPI (Combined) series
+   • Set date range: Jan 2015 – Jan 2025
+   • Export to CSV, with columns:
+     - Date (YYYY-MM-DD, first day of month)
+     - CPI_Combined
+
+   Notes:
+   • This is the headline CPI series used by the Reserve Bank of India for inflation targeting.[web:24][web:75]
+
+
+2. GOLD PRICE DATA – INDIA (MCX)
+
+   • Variable: MCX Gold Price (INR per 10 grams), near‑month futures
+   • Frequency: Daily (aggregated to monthly)
+   • Coverage: January 2015 – January 2025
+
+   Primary Source:
+   • Investing.com – Gold Historical Data (India / MCX)
+     - URL (entry point): https://in.investing.com/commodities/gold-historical-data
+
+   Procedure:
+   • On the page, select:
+     - Instrument: Gold (MCX)
+     - Date range: 01/01/2015 – 31/01/2025
+   • Set frequency to “Daily” or “Monthly” (daily preferred for precise aggregation)
+   • Download CSV with columns:
+     - Date
+     - Price
+     - Open
+     - High
+     - Low
+     - Vol.
+     - Change %
+   • Save as gold_prices.csv
+
+   Notes:
+   • Prices are in INR per 10 grams and reflect standardized MCX contracts, capturing both global gold price changes in USD and USD/INR exchange-rate movements.[web:15][web:74]
+
+
+3. DOCUMENTATION & POLICY CONTEXT (NON‑NUMERICAL SOURCES)
+
+   • RBI communication, MOSPI press releases, and policy notes used for:
+     - Describing the July 2024 gold import duty cut.
+     - Providing macroeconomic context (RBI gold accumulation, inflation trends).
+
+   Examples:
+   • MOSPI CPI press releases (various months, 2015–2025)[web:50][web:57]
+   • RBI Handbook of Statistics on the Indian Economy – Prices & Gold tables[web:35][web:39]
+   • Articles and briefs summarizing recent gold import duty changes and RBI’s gold reserve buildup.[web:5][web:10]
+
+All numerical analysis in the project can be replicated using only:
+   • cpi_data.csv (from MOSPI)
+   • gold_prices.csv (from Investing.com / MCX)
