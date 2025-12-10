@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # README: Is Gold a Reliable Inflation Hedge in India? (2015–2025)
 
 ## Project Overview
@@ -345,6 +344,4 @@ To verify you can replicate all results, check off:
    # Check outputs/ folder for 3 PNG charts
    # Read analysis_summary.txt for key statistics
    ```
-=======
-# gold-inflation-hedge-india
->>>>>>> 656a032bfc5b153acf895a62e437c45481e5c9d8
+
